@@ -28,30 +28,48 @@
                 }
             }
             list = new List<int>(NewList);
-            Console.WriteLine("On day "+ (i+1) + " there are "+ list.Count + " fish");   
+            Console.WriteLine("On day " + (i + 1) + " there are " + list.Count + " fish");
         }
-        Console.WriteLine("\nTotal amount of fish = "+list.Count);
+        Console.WriteLine("\nTotal amount of fish = " + list.Count);
     }
 
     static void Day6_2()
     {
-        int days = 256;
+        int iterations = 256;
 
-        string[] input = System.IO.File.ReadAllLines(@"C:\Users\ncim\source\repos\AoC\Day6\testdata");
+        string[] input = System.IO.File.ReadAllLines(@"C:\Users\ncim\source\repos\AoC\Day6\data");
         List<string> values = new List<string>(input[0].Split(','));
         List<int> list = values.Select(int.Parse).ToList();
-        int fish;
+       
+        long[] days = new long[9];
 
-        for (int i = 0;i < days; i++)
+        foreach (int item in list)
         {
-
+            days[item]++;
         }
 
-    }
+        for (int i = 0; i < iterations; i++)
+        {
+            var breeding = days[0];
 
+            for (int j = 1; j <= 8; j++)
+            {
+                days[j - 1] = days[j];
+            }
+
+            days[6] += breeding;
+            days[8] = breeding;
+            Console.WriteLine("On day " + i + " there are " + days.Sum() + " fish");
+        }
+        Console.WriteLine(days.Sum());
+
+
+
+
+    }
     static void Main()
     {
-        Day6_1();
+        Day6_2();
     }
 }
 
